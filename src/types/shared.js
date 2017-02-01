@@ -5,14 +5,18 @@ declare type AlbumIdType = string;
 declare type TrackType = {
   id: TrackIdType,
   name: string,
-  preview_url: string,
+  previewUrl: string,
 };
 
-declare type AlbumType = {
+declare type AlbumListType = {
   id: AlbumIdType,
   name: string,
-  images: Array<{ url: string }>,
-  tracks: {
-    items: Array<TrackType>,
-  },
+  image: string,
 };
+
+declare type AlbumFullType = {
+  id: AlbumIdType,
+  name: string,
+  image: string,
+  tracks: Array<TrackType>,
+}

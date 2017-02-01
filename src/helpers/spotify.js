@@ -1,17 +1,27 @@
 // @flow
 import axios from 'axios';
 
-const getAlbum = async (albumId: string) => {
+const getAlbum = async (albumId: string): Promise<AlbumFullType> => {
   try {
     const response = await axios.get(`https://api.spotify.com/v1/albums/${albumId}`);
+    const album = response.data;
 
-    return response;
+    return {
+      id: album.id,
+      image: album.images && album.images[0] && album.images[0].url,
+      name: album.name,
+      tracks: album.tracks.items.map(({ id, name, preview_url }) => ({
+        id,
+        name,
+        previewUrl: preview_url,
+      })),
+    };
   } catch (error) {
-    return error;
+    throw Error(error);
   }
 };
 
-const searchAlbums = async (searchText: string) => {
+const searchAlbums = async (searchText: string): Promise<Array<AlbumListType>> => {
   if (!searchText && searchText.length === 0) throw Error('searchText ne sme biti prazen');
 
   const query = {
@@ -23,15 +33,21 @@ const searchAlbums = async (searchText: string) => {
 
   try {
     const response = await axios.get('https://api.spotify.com/v1/search', query);
-    return response;
+    const albums = response.data.albums.items.map(album => ({
+      id: album.id,
+      name: album.name,
+      image: album.images && album.images[0] && album.images[0].url,
+    }));
+
+    return albums;
   } catch (error) {
-    return error;
+    throw Error(error);
   }
 };
 
-const getTracks = async (tracks: Array<TrackIdType>) => {
+const getTracks = async (trackIds: Array<TrackIdType>): Promise<Array<TrackType>> => {
   // Spotify expects ids separated by commas (have to remove [])
-  const queryString = JSON.stringify(tracks)
+  const queryString = JSON.stringify(trackIds)
     .slice(1, -1)
     .replace(new RegExp('"', 'g'), '');
 
@@ -45,10 +61,22 @@ const getTracks = async (tracks: Array<TrackIdType>) => {
 
   try {
     const response = await axios.get('https://api.spotify.com/v1/tracks', query);
-    return response;
+
+    const tracks = response.data.tracks.map(({ id, name, preview_url }) => ({
+      id,
+      name,
+      previewUrl: preview_url,
+    }));
+    return tracks;
   } catch (error) {
-    return error;
+    throw Error(error);
   }
+};
+
+declare type TrackType = {
+  id: TrackIdType,
+  name: string,
+  previewUrl: string,
 };
 
 export { getAlbum, searchAlbums, getTracks };
