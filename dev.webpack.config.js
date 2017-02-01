@@ -1,5 +1,5 @@
 // @flow
-const { resolve } = require('path');
+const resolve = require('path').resolve;
 const webpack = require('webpack');
 
 module.exports = {
