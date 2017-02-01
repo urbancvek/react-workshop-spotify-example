@@ -1,0 +1,40 @@
+{
+  "name": "react-workshop-spotify-example",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Starter project for React.",
+  "scripts": {
+    "start": "webpack-dev-server --config dev.webpack.config.js",
+    "deploy": "webpack --config prod.webpack.config.js; netlify deploy; rm static/bundle.js",
+    "lint": "eslint .",
+    "flow": "flow check . --show-all-errors"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/urbancvek/react-workshop-spotify-example.git"
+  },
+  "author": "Urban Cvek <urbancvek@cunomo.com> (http://github.com/urbancvek)",
+  "dependencies": {
+    "core-decorators": "^0.15.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-router-dom": "^4.0.0-beta.3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.22.1",
+    "babel-loader": "^6.2.10",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-runtime": "^6.22.0",
+    "babel-polyfill": "^6.22.0",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-react": "^6.22.0",
+    "babel-preset-stage-2": "^6.22.0",
+    "eslint": "^3.14.1",
+    "eslint-config-shopsterdotio": "1.0.0",
+    "flow-bin": "^0.38.0",
+    "netlify-cli": "^1.1.0",
+    "react-hot-loader": "^3.0.0-beta.6",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.2.0-rc.0"
+  }
+}
